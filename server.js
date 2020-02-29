@@ -39,18 +39,28 @@ const watcher = new Watcher();
 io.on('connection', function (socket) {
     console.log('a user connected');
     watcher.on('jig', (jig) => {
-        if (jig.stage === 'challenge') {
-            jig.accept(discoveryKey);
-        } else if (jig.stage === 'open') {
-            socket.emit(jig);
+        try {
+            if (jig.stage === 'challenge') {
+                jig.accept(discoveryKey);
+            } else if (jig.stage === 'open') {
+                socket.emit(jig);
+            }
         }
-
+        catch (e) {
+            console.error(e);
+        }
     })
 });
 
 app.use(express.json());
 app.use(cors());
+
+app.use((req, res, next) => {
+    console.log('REQ:', req.path);
+    next();
+})
 app.post('/challenge', (req, res) => {
+    console.log(req.body);
     const { pubKey } = req.body;
     const game = new JigTacTo(pubKey, discoveryKey);
 })
