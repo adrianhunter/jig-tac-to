@@ -27,7 +27,7 @@ class Watcher extends EventEmitter {
             for (let jig of run.owner.jigs) {
                 if (!jigs.has(jig.location)) {
                     jigs.add(jig.location);
-                    console.log('Jig:', jig.constructor.name, jig.location)
+                    console.log('Jig:', jig.constructor.name, jig.origin, jig.location)
                     this.emit('jig', jig);
                 }
             }
