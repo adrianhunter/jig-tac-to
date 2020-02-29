@@ -1,0 +1,7 @@
+{
+  "name": "run",
+  "version": "0.4.1-alpha",
+  "dependencies": {
+    "bsv": "1.2.0"
+  }
+}
