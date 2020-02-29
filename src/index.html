@@ -1,0 +1,36 @@
+<!-- Example: dist/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Smelte app app</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/smelte.css" />
+
+    <link rel="stylesheet" href="/css/utils.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/smelte.css" />
+    <link rel="stylesheet" href="/css/smelte.css" />
+
+  </head>
+    <body>
+        <div id="app"></div>
+
+        <script type="module">
+            import App from './App.js';
+
+            new App({
+                target: document.querySelector('#app'),
+            });
+        </script>
+    </body>
+</html>

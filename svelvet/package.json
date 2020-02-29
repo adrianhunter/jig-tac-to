@@ -1,0 +1,49 @@
+{
+  "name": "svelvet",
+  "description": "A cli svelte compiler that works with snowpack",
+  "version": "0.1.10",
+  "author": "Jake Deichert",
+  "repository": "github:jakedeichert/svelvet",
+  "license": "MIT",
+  "bin": "./bin/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf lib",
+    "dev": "npm run build -- -w",
+    "build": "npm run clean && tsc",
+    "test": "./scripts/test.sh",
+    "format": "prettier '**/*.{js,jsx,ts,tsx,css,html,json,yml}' --write --ignore-path .gitignore",
+    "format:check": "prettier '**/*.{js,jsx,ts,tsx,css,html,json,yml}' --list-different --ignore-path .gitignore",
+    "lint": "eslint . --ext ts --ignore-pattern dist --ignore-pattern node_modules --ignore-pattern tests"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "chokidar": "^3.3.1",
+    "glob": "^7.1.6",
+    "less": "^3.10.3",
+    "p-limit": "^2.2.2",
+    "postcss": "^7.0.26",
+    "snowpack": "^1.1.4",
+    "svelte-preprocess": "^3.3.1",
+    "terser": "^4.6.3"
+  },
+  "devDependencies": {
+    "@jakedeichert/eslint-config": "^4.0.5",
+    "@pyoner/svelte-types": "^3.4.4-2",
+    "@types/babel__core": "^7.1.3",
+    "@types/glob": "^7.1.1",
+    "@types/node": "^13.1.8",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "postcss-load-config": "^2.1.0",
+    "prettier": "^1.16.1",
+    "svelte": "^3.7.1",
+    "typescript": "^3.7.5"
+  },
+  "peerDependencies": {
+    "svelte": "^3.7.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  }
+}

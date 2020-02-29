@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "allowJs": false,
+    "declaration": false,
+    "sourceMap": false,
+    "outDir": "./lib",
+    "strict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true
+    // "transp"
+    // "types": ["node_"]
+  },
+  "exclude": ["tests/**/*.*"]
+}

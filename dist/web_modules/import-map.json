@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "simple-gql": "./simple-gql.js",
+    "smelte": "./smelte.js",
+    "svelte": "./svelte.js",
+    "svelte/internal": "./svelte/internal.js",
+    "svelte/store": "./svelte/store.js"
+  }
+}

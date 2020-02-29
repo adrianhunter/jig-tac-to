@@ -1,0 +1,1 @@
+{"version":3,"file":"index-002eafc8.js","sources":["../../src/pages/index.svelte"],"sourcesContent":["<script>\n  console.log(\"wow dude!\");\n</script>\n\n<div>hello</div>\n"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;CACE,OAAO,CAAC,GAAG,CAAC,WAAW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"}

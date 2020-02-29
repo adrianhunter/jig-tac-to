@@ -1,0 +1,21 @@
+// Import the typography styles.
+//
+// MDC Typography
+//
+@import "@material/typography/mdc-typography";
+
+.container {
+  max-width: 1280px;
+  padding: 30px;
+}
+
+:global(.flat) {
+  border-radius: none;
+}
+.flat {
+  border-radius: none;
+}
+
+.smui-paper {
+  word-break: break-word;
+}
