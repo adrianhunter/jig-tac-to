@@ -4,8 +4,8 @@
 
   export let width = 3;
   export let height = 3;
-  export let cellWidth = 34;
-  export let cellHeight = 34;
+  export let cellWidth = 64;
+  export let cellHeight = 64;
   export let colorStroke = "#999";
   let boardWidth = 1 + width * cellWidth;
   let boardHeight = 1 + height * cellHeight;
@@ -66,7 +66,7 @@
       ctx.beginPath();
 
       ctx.font = "bold 22px Century Gothic";
-      let d = 8;
+      let d = 22;
       let k = 0;
       for (let i = 0; i < height; i += 1) {
         for (let j = 0; j < width; j += 1) {
@@ -87,6 +87,13 @@
     draw();
   });
 </script>
+
+<style>
+  canvas {
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 
 <canvas
   bind:this={canvas}
