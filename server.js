@@ -17,10 +17,10 @@ const run = new Run({
     purse: process.env.PURSE
 });
 
+const jigs = new Set();
 class Watcher extends EventEmitter {
     constructor() {
         super();
-        const jigs = new Set();
 
         setInterval(async () => {
             await run.owner.sync();
@@ -36,10 +36,12 @@ class Watcher extends EventEmitter {
 }
 
 const watcher = new Watcher();
+watcher.on('jig', (jig) => console.log('ON JIG:', jig.stage));
 
 io.on('connection', function (socket) {
     console.log('a user connected');
     watcher.on('jig', (jig) => {
+        console.log('ON JIG:', jig.stage);
         try {
             if (jig.stage === 'challenge') {
                 jig.accept(discoveryKey);
@@ -50,7 +52,8 @@ io.on('connection', function (socket) {
         catch (e) {
             console.error(e);
         }
-    })
+    });
+    socket.on('')
 });
 
 app.use(express.json());
@@ -68,7 +71,7 @@ app.post('/challenge', (req, res) => {
 
 http.listen(3001, async () => {
     try {
-        JigTacTo = await run.load('751f7113b60491902cec59a00e378bdeb0119a6f0929be1573eb5ca58fbf6c8c_o1');
+        JigTacTo = await run.load('550a77554bd91384f7e5b34915e6ef1d986be3d92b4023ca580de9b9b2abc4a1_o1');
         await pool.create({
             path: "jigtacto",
             port: 9999
