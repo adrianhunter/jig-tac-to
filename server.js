@@ -39,16 +39,26 @@ class Watcher extends EventEmitter {
 }
 
 const watcher = new Watcher();
-watcher.on('jig', (jig) => console.log('ON JIG:', jig.stage));
+watcher.on('jig', async (jig) => {
+    console.log('ON JIG:', jig.stage);
+    try {
+        if (jig.stage === 'challenge') {
+            jig.accept(discoveryKey);
+            await jig.sync();
+            console.log('Updated');
+        }
+    }
+    catch (e) {
+        console.error(e);
+    }
+});
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
     console.log('a user connected');
-    watcher.on('jig', (jig) => {
-        console.log('ON JIG:', jig.stage);
+    watcher.on('jig', async (jig) => {
+        // console.log('ON JIG:', jig.stage);
         try {
-            if (jig.stage === 'challenge') {
-                jig.accept(discoveryKey);
-            } else if (jig.stage === 'open') {
+            if (jig.stage === 'open') {
                 socket.emit(jig);
             }
         }
@@ -56,6 +66,7 @@ io.on('connection', function (socket) {
             console.error(e);
         }
     });
+
     socket.on('')
 });
 
