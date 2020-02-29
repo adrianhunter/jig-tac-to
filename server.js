@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const Run = require('./run/dist/run.node.min');
@@ -48,6 +49,7 @@ io.on('connection', function (socket) {
 });
 
 app.use(express.json());
+app.use(cors());
 app.post('/challenge', (req, res) => {
     const { pubKey } = req.body;
     const game = new JigTacTo(pubKey, discoveryKey);
