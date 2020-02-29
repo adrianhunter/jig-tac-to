@@ -1,6 +1,6 @@
 <script lang="typescript">
   // import Board from "../components/Board.svelte";
-  import io from 'socket.io-client';
+  // import io from 'socket.io-client';
   import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
   import IconButton from "@smui/icon-button";
   import Board from "../components/Board.svelte";
@@ -11,7 +11,7 @@
     gameState.giveSquareToCurrentPlayer(index);
   }
 
-  const socket = io('http://localhost:3000'); 
+  const socket = io(); 
   socket.on('jig', (jig) => {
     console.log(jig.location);
   });
