@@ -1,9 +1,13 @@
 require('dotenv').config();
 const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const Run = require('./run/dist/run.node.min');
+const EventEmitter = require('events');
+const Overpool = require('overpool');
 
+const pool = new Overpool();
 let discoveryKey;
 let JigTacTo;
 const run = new Run({
@@ -11,8 +15,6 @@ const run = new Run({
     owner: process.env.OWNER,
     purse: process.env.PURSE
 });
-
-const app = express();
 
 class Watcher extends EventEmitter {
     constructor() {
@@ -52,11 +54,16 @@ app.post('/challenge', (req, res) => {
 })
 
 http.listen(3000, async () => {
-    JigTacTo = await run.load('751f7113b60491902cec59a00e378bdeb0119a6f0929be1573eb5ca58fbf6c8c_o1');
-    await pool.create({
-        path: "jigtacto",
-        port: 9999
-    });
-    discoveryKey = await pool.pub({ path: "jigtacto" })
-    console.log('listening on *:3000');
+    try {
+        JigTacTo = await run.load('751f7113b60491902cec59a00e378bdeb0119a6f0929be1573eb5ca58fbf6c8c_o1');
+        await pool.create({
+            path: "jigtacto",
+            port: 9999
+        });
+        discoveryKey = await pool.pub({ path: "jigtacto" })
+        console.log('listening on *:3000');
+    } catch (e) {
+        console.error(e);
+    }
+
 });

@@ -1,9 +1,9 @@
-Run 0.4.1 alpha
+Run 0.4.5 alpha
 ----------------
 
 Thanks for evaluating this alpha version of Run. Please keep confidential.
 
-To give it a go, visit https://star.store for tutorials.
+To give it a go, visit https://run.network for tutorials.
 
 Installation
 - run `npm install` to install node dependencies
@@ -20,6 +20,7 @@ Known Limitations
 
 Change Log
 ----------
+0.4.5:  Default to the new Run Connect API, replacing Star Query
 0.4.0:  Agoric SES used to sandbox code
         Microsoft Edge support
         UTXO splitting more reliable and efficient
