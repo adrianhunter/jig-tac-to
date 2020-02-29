@@ -1,13 +1,21 @@
 <script lang="typescript">
   // import Board from "../components/Board.svelte";
+  import io from 'socket.io-client';
   import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
   import IconButton from "@smui/icon-button";
   import Board from "../components/Board.svelte";
+  let pubKey;
   import { gameState, DRAW } from "../stores/store.js";
   function onSquareClick(e) {
     let index = e.target.dataset.index;
     gameState.giveSquareToCurrentPlayer(index);
   }
+
+  const socket = io('http://localhost:3000'); 
+  socket.on('jig', (jig) => {
+    console.log(jig.location);
+  });
+});
 </script>
 
 <style>
@@ -88,4 +96,17 @@
   <p>
     <button on:click={gameState.reset}>Start a new game</button>
   </p>
+
+  <input type="text" bind:value={pubKey} />
+
+  <button
+    on:click={() => {
+      fetch('http://localhost:3000/challenge', {
+        method: 'POST',
+        body: { pubKey }
+      });
+    }}>
+    Challenge
+  </button>
+
 </div>
