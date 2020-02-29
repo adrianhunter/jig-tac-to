@@ -25,7 +25,7 @@ class Watcher extends EventEmitter {
             await run.owner.sync();
             for (let jig of run.owner.jigs) {
                 if (!jigs.has(jig.location)) {
-                    jigs.set(jig.location);
+                    jigs.add(jig.location);
                     this.emit('jig', jig);
                 }
             }
