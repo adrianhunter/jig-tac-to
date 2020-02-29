@@ -1,81 +1,72 @@
-import { writable, derived } from "svelte/store";
-import { calculateWinner } from "../lib/helpers.js";
+import { writable } from "svelte/store";
 
-class History {
-  constructor() {
-    this.history = new Array();
-    this.current = -1;
-  }
+export const PLAYER_1 = "X";
+export const PLAYER_2 = "O";
+export const DRAW = "draw";
 
-  currentState() {
-    return this.history[this.current];
-  }
+const STARTING_GAME_STATE = {
+  history: [],
+  squares: Array(9).fill(null),
+  stepNumber: 0,
+  currentPlayer: PLAYER_1,
+  winningPlayer: null
+};
 
-  push(state) {
-    // remove all redo states
-    if (this.canRedo()) this.history.splice(this.current + 1);
-
-    // add a new state
-    this.current++;
-    this.history.push(state);
-  }
-
-  canUndo() {
-    return this.current > 0;
-  }
-
-  canRedo() {
-    return this.current < this.history.length - 1;
-  }
-
-  undo() {
-    if (this.canUndo()) this.current--;
-  }
-
-  redo() {
-    if (this.canRedo()) this.current++;
-  }
-
-  setCurrent(current) {
-    if (current >= 0 && current < this.history.length) this.current = current;
-  }
-}
-
-function createHistory() {
-  const { subscribe, set, update } = writable(new History());
+function createGameState() {
+  const { subscribe, set, update } = writable(
+    JSON.parse(JSON.stringify(STARTING_GAME_STATE))
+  );
 
   return {
     subscribe,
-    push: state =>
-      update(h => {
-        h.push(state);
-        console.log(h);
-        return h;
+    giveSquareToCurrentPlayer: index =>
+      update(state => {
+        const history = state.history.slice(0, state.stepNumber);
+        const squares = state.squares.slice();
+
+        if (squares[index] || state.winningPlayer) {
+          return state;
+        }
+
+        squares[index] = state.currentPlayer;
+
+        const allSquaresFilled = !squares.filter(square => !square).length;
+        const winningPlayer =
+          calculateWinner(squares) || (allSquaresFilled && DRAW);
+
+        return {
+          history: history.concat([{ squares: state.squares }]),
+          squares,
+          stepNumber: history.length,
+          currentPlayer: state.currentPlayer === PLAYER_1 ? PLAYER_2 : PLAYER_1,
+          winningPlayer
+        };
       }),
-    undo: () =>
-      update(h => {
-        h.undo();
-        return h;
-      }),
-    redo: () =>
-      update(h => {
-        h.redo();
-        return h;
-      }),
-    setCurrent: current =>
-      update(h => {
-        h.setCurrent(current);
-        return h;
-      })
+    reset: () => set(JSON.parse(JSON.stringify(STARTING_GAME_STATE)))
   };
 }
 
-export const history = createHistory();
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
 
-export const status = derived(history, $history => {
-  if ($history.currentState()) {
-    if (calculateWinner($history.currentState().squares)) return 1;
-    else if ($history.current == 9) return 2;
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
   }
-  return 0;
-});
+
+  return null;
+}
+
+export const gameState = createGameState();
