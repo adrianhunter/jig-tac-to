@@ -19,13 +19,13 @@ const run = new Run({
 class Watcher extends EventEmitter {
     constructor() {
         super();
-        this.jigs = new Set();
+        const jigs = new Set();
 
         setInterval(async () => {
             await run.owner.sync();
             for (let jig of run.owner.jigs) {
-                if (!this.jigs.has(jig.location)) {
-                    this.jigs.set(jig.location);
+                if (!jigs.has(jig.location)) {
+                    jigs.set(jig.location);
                     this.emit('jig', jig);
                 }
             }
