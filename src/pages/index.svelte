@@ -1,9 +1,25 @@
-<script>
+<script lang="typescript">
+  // import Board from "../components/Board.svelte";
+  import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
+  import IconButton from "@smui/icon-button";
   import Board from "../components/Board.svelte";
-  import { history, status } from "../stores/store.js";
+  import { gameState, DRAW } from "../stores/store.js";
+  function onSquareClick(e) {
+    let index = e.target.dataset.index;
+    gameState.giveSquareToCurrentPlayer(index);
+  }
 </script>
 
 <style>
+  body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+  }
+
+  ol,
+  ul {
+    padding-left: 30px;
+  }
   .game {
     font: 14px "Century Gothic", Futura, sans-serif;
     margin: 20px;
@@ -19,51 +35,57 @@
     margin-bottom: 10px;
   }
 
+  .game-board {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   ol {
     padding-left: 30px;
   }
+  .game {
+    display: flex;
+    flex-direction: row;
+  }
+  .game-info {
+    margin-left: 20px;
+  }
 </style>
+
+<svelte:head>
+  <title>Jig Tac To</title>
+</svelte:head>
+
+<TopAppBar variant="static" color="primary">
+  <Row>
+    <Section>
+      <!-- <IconButton class="material-icons">menu</IconButton> -->
+      <Title>Jig Tac To</Title>
+    </Section>
+    <Section align="end" toolbar />
+  </Row>
+</TopAppBar>
 
 <div class="game">
   <div class="game-board">
-    <Board />
+    <Board squares={$gameState.squares} on:click={onSquareClick} />
   </div>
-  <div class="game-info">
-    <div class="status">
-      {#if $status === 1}
-        <b>Winner: {!$history.currentState().xIsNext ? 'X' : 'O'}</b>
-      {:else if $status === 2}
-        <b>Draw</b>
-      {:else}Next player: {$history.currentState().xIsNext ? 'X' : 'O'}{/if}
-    </div>
-    <div>
-      {#if $history.canUndo()}
-        <button on:click={history.undo}>Undo</button>
-      {:else}
-        <button disabled>Undo</button>
-      {/if}
-      {#if $history.canRedo()}
-        <button on:click={history.redo}>Redo</button>
-      {:else}
-        <button disabled>Redo</button>
-      {/if}
-    </div>
-    <ol>
-      {#each $history.history as value, i}
-        {#if i == 0}
-          <li>
-            <button on:click={() => history.setCurrent(i)}>
-              Go to game start
-            </button>
-          </li>
-        {:else}
-          <li>
-            <button on:click={() => history.setCurrent(i)}>
-              Go to move #{i}
-            </button>
-          </li>
-        {/if}
-      {/each}
-    </ol>
-  </div>
+
+</div>
+<div class="game-info">
+  {#if $gameState.winningPlayer === DRAW}
+    <p>GAME OVER: it's a draw!</p>
+  {:else if $gameState.winningPlayer}
+    <p>
+      GAME OVER: Player
+      <strong>{$gameState.winningPlayer}</strong>
+      won!
+    </p>
+  {:else}
+    <p>Current player is: {$gameState.currentPlayer}</p>
+  {/if}
+
+  <p>
+    <button on:click={gameState.reset}>Start a new game</button>
+  </p>
 </div>
