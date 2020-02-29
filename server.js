@@ -53,7 +53,7 @@ app.post('/challenge', (req, res) => {
     const game = new JigTacTo(pubKey, discoveryKey);
 })
 
-http.listen(3000, async () => {
+http.listen(3001, async () => {
     try {
         JigTacTo = await run.load('751f7113b60491902cec59a00e378bdeb0119a6f0929be1573eb5ca58fbf6c8c_o1');
         await pool.create({
@@ -61,7 +61,7 @@ http.listen(3000, async () => {
             port: 9999
         });
         discoveryKey = await pool.pub({ path: "jigtacto" })
-        console.log('listening on *:3000');
+        console.log('listening on *:3001');
     } catch (e) {
         console.error(e);
     }

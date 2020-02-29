@@ -1864,6 +1864,7 @@ var app = (function () {
         };
         return MDCFoundation;
     }());
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -1961,6 +1962,7 @@ var app = (function () {
         };
         return MDCComponent;
     }());
+    //# sourceMappingURL=component.js.map
 
     /**
      * @license
@@ -2012,6 +2014,7 @@ var app = (function () {
         }
         return supportsPassive_ ? { passive: true } : false;
     }
+    //# sourceMappingURL=events.js.map
 
     /**
      * @license
@@ -2041,6 +2044,7 @@ var app = (function () {
             || element.msMatchesSelector;
         return nativeMatches.call(element, selector);
     }
+    //# sourceMappingURL=ponyfill.js.map
 
     /**
      * @license
@@ -2089,6 +2093,7 @@ var app = (function () {
         PADDING: 10,
         TAP_DELAY_MS: 300,
     };
+    //# sourceMappingURL=constants.js.map
 
     /**
      * Stores result from supportsCssVariables to avoid redundant processing to
@@ -2164,6 +2169,7 @@ var app = (function () {
         }
         return { x: normalizedX, y: normalizedY };
     }
+    //# sourceMappingURL=util.js.map
 
     /**
      * @license
@@ -2618,6 +2624,7 @@ var app = (function () {
         };
         return MDCRippleFoundation;
     }(MDCFoundation));
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -2723,6 +2730,7 @@ var app = (function () {
         };
         return MDCRipple;
     }(MDCComponent));
+    //# sourceMappingURL=component.js.map
 
     /**
      * @license
@@ -2764,6 +2772,7 @@ var app = (function () {
         ROOT_SELECTOR: '.mdc-top-app-bar',
         TITLE_SELECTOR: '.mdc-top-app-bar__title',
     };
+    //# sourceMappingURL=constants.js.map
 
     /**
      * @license
@@ -2844,6 +2853,7 @@ var app = (function () {
         };
         return MDCTopAppBarBaseFoundation;
     }(MDCFoundation));
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -3006,6 +3016,7 @@ var app = (function () {
         };
         return MDCTopAppBarFoundation;
     }(MDCTopAppBarBaseFoundation));
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -3060,6 +3071,7 @@ var app = (function () {
         };
         return MDCFixedTopAppBarFoundation;
     }(MDCTopAppBarFoundation));
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -3159,6 +3171,7 @@ var app = (function () {
         };
         return MDCShortTopAppBarFoundation;
     }(MDCTopAppBarBaseFoundation));
+    //# sourceMappingURL=foundation.js.map
 
     /**
      * @license
@@ -3275,6 +3288,7 @@ var app = (function () {
         };
         return MDCTopAppBar;
     }(MDCComponent));
+    //# sourceMappingURL=component.js.map
 
     function forwardEventsBuilder(component, additionalEvents = []) {
       const events = [
@@ -5425,7 +5439,7 @@ var app = (function () {
     	}
 
     	const click_handler = () => {
-    		fetch("http://localhost:3000/challenge", { method: "POST", body: { pubKey } });
+    		fetch("http://localhost:3001/challenge", { method: "POST", body: { pubKey } });
     	};
 
     	$$self.$capture_state = () => {

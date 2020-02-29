@@ -101,7 +101,7 @@
 
   <button
     on:click={() => {
-      fetch('http://localhost:3000/challenge', {
+      fetch('http://localhost:3001/challenge', {
         method: 'POST',
         body: { pubKey }
       });
