@@ -17,6 +17,8 @@ const run = new Run({
     purse: process.env.PURSE
 });
 
+const LOC = '550a77554bd91384f7e5b34915e6ef1d986be3d92b4023ca580de9b9b2abc4a1_o1';
+
 const jigs = new Set();
 class Watcher extends EventEmitter {
     constructor() {
@@ -26,6 +28,7 @@ class Watcher extends EventEmitter {
             await run.owner.sync();
             for (let jig of run.owner.jigs) {
                 if (!jigs.has(jig.location)) {
+                    if (jig.constructor.origin !== LOC) continue;
                     jigs.add(jig.location);
                     console.log('Jig:', jig.constructor.name, jig.origin, jig.location)
                     this.emit('jig', jig);
@@ -71,7 +74,7 @@ app.post('/challenge', (req, res) => {
 
 http.listen(3001, async () => {
     try {
-        JigTacTo = await run.load('550a77554bd91384f7e5b34915e6ef1d986be3d92b4023ca580de9b9b2abc4a1_o1');
+        JigTacTo = await run.load(LOC);
         await pool.create({
             path: "jigtacto",
             port: 9999
