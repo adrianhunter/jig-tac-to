@@ -1,9 +1,13 @@
-<script lang="typescript">
+<script>
   // import Board from "../components/Board.svelte";
   // import io from 'socket.io-client';
   import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
   import IconButton from "@smui/icon-button";
   import Board from "../components/Board.svelte";
+  const sse = new EventSource("http://localhost:3001/jigs");
+  sse.onmessage = event => {
+    console.log("Event:", event.data);
+  };
   let pubKey;
   import { gameState, DRAW } from "../stores/store.js";
   function onSquareClick(e) {
@@ -11,11 +15,13 @@
     gameState.giveSquareToCurrentPlayer(index);
   }
 
-  const socket = io(); 
-  socket.on('jig', (jig) => {
-    console.log(jig.location);
-  });
-});
+  (async () => {
+    const resp = await fetch("http://localhost:3001/pubkey");
+    pubKey = await resp.json();
+    console.log("PubKey:", pubKey);
+  })();
+
+  let currentJig;
 </script>
 
 <style>
@@ -89,8 +95,8 @@
       <strong>{$gameState.winningPlayer}</strong>
       won!
     </p>
-  {:else}
-    <p>Current player is: {$gameState.currentPlayer}</p>
+  {:else if currentJig}
+    <p>Current player is: {currentJig.owner}</p>
   {/if}
 
   <p>
@@ -103,7 +109,10 @@
     on:click={() => {
       fetch('http://localhost:3001/challenge', {
         method: 'POST',
-        body: { pubKey }
+        body: JSON.stringify({ pubKey }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
     }}>
     Challenge
