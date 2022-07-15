@@ -31,7 +31,7 @@
     "rollup-plugin-terser": "^4.0.4",
     "sirv-cli": "^0.4.0",
     "snowpack": "^1.1.4",
-    "svelte": "3.18.1",
+    "svelte": "3.49.0",
     "svelte-material-ui": "^1.0.0-beta.20",
     "svelte-preprocess": "^3.4.0",
     "tailwindcss": "^1.0.3",
